@@ -1,13 +1,13 @@
 class StatsApp {
     inputCounter: HTMLInputElement;
     inputData: HTMLDivElement;
-
-    inputs = new Array<HTMLInputElement>();
-
     sumInput: HTMLInputElement;
     avgInput: HTMLInputElement;
     minInput: HTMLInputElement;
-    maxInput: HTMLInputElement;
+    maxInput: HTMLInputElement;    
+
+    inputs = new Array<HTMLInputElement>();
+    innerCounter = 0;
 
     constructor() {
         this.startApp();
@@ -15,21 +15,48 @@ class StatsApp {
 
     startApp(){
         this.getInputs();
-
-
-
         this.setInputs();
     }
 
     setInputs() {
-        for(let i = 0; i < +this.inputCounter.value; i++){
-           let input = document.createElement('input');
-           input.type = 'number';
-           input.id = `input${i}`;
-           input.addEventListener('blur', () => this.computeData());
-           this.inputs.push(input);
-           this.inputData.appendChild(input);
+        let counter = this.innerCounter + +this.inputCounter.value;
+        for(this.innerCounter; this.innerCounter < counter ; this.innerCounter++){
+            this.creatIputDiv();
         }
+    }
+
+    creatIputDiv(){
+        let div = document.createElement('div');
+        div.id = `inputDiv${this.innerCounter}`;
+
+        div.appendChild(this.creatInput());
+        div.appendChild(this.createRemoveButton(this.innerCounter));
+
+        this.inputData.appendChild(div);
+    }
+
+    creatInput(): HTMLInputElement{
+        let input = document.createElement('input');
+        input.id = `input${this.innerCounter}`;
+        input.type = 'number';
+        input.addEventListener('blur', () => this.computeData());
+        this.inputs.push(input);
+
+        return input;
+    }
+
+    createRemoveButton(id: number): HTMLButtonElement{
+        let button = document.createElement('button');
+        button.onclick = () => this.onRemoveButtonClick(id);
+        button.innerText = 'X';
+
+        return button;
+    }
+
+    onRemoveButtonClick(id: number){
+        this.inputs.splice(this.inputs.indexOf(document.querySelector(`#input${id}`)), 1);
+        document.querySelector(`#inputDiv${id}`).remove();
+        this.computeData();
     }
 
     getInputs(){        
@@ -37,7 +64,6 @@ class StatsApp {
         this.inputCounter.addEventListener('blur', () => this.setInputs());
 
         this.inputData = document.querySelector('.input-data');
-
         this.sumInput = document.querySelector('#sum');
         this.avgInput = document.querySelector('#avg');
         this.minInput = document.querySelector('#min');

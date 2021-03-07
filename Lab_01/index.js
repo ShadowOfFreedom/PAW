@@ -1,6 +1,7 @@
 var StatsApp = /** @class */ (function () {
     function StatsApp() {
         this.inputs = new Array();
+        this.innerCounter = 0;
         this.startApp();
     }
     StatsApp.prototype.startApp = function () {
@@ -8,15 +9,38 @@ var StatsApp = /** @class */ (function () {
         this.setInputs();
     };
     StatsApp.prototype.setInputs = function () {
-        var _this = this;
-        for (var i = 0; i < +this.inputCounter.value; i++) {
-            var input = document.createElement('input');
-            input.type = 'number';
-            input.id = "input" + i;
-            input.addEventListener('blur', function () { return _this.computeData(); });
-            this.inputs.push(input);
-            this.inputData.appendChild(input);
+        var counter = this.innerCounter + +this.inputCounter.value;
+        for (this.innerCounter; this.innerCounter < counter; this.innerCounter++) {
+            this.creatIputDiv();
         }
+    };
+    StatsApp.prototype.creatIputDiv = function () {
+        var div = document.createElement('div');
+        div.id = "inputDiv" + this.innerCounter;
+        div.appendChild(this.creatInput());
+        div.appendChild(this.createRemoveButton(this.innerCounter));
+        this.inputData.appendChild(div);
+    };
+    StatsApp.prototype.creatInput = function () {
+        var _this = this;
+        var input = document.createElement('input');
+        input.id = "input" + this.innerCounter;
+        input.type = 'number';
+        input.addEventListener('blur', function () { return _this.computeData(); });
+        this.inputs.push(input);
+        return input;
+    };
+    StatsApp.prototype.createRemoveButton = function (id) {
+        var _this = this;
+        var button = document.createElement('button');
+        button.onclick = function () { return _this.onRemoveButtonClick(id); };
+        button.innerText = 'X';
+        return button;
+    };
+    StatsApp.prototype.onRemoveButtonClick = function (id) {
+        this.inputs.splice(this.inputs.indexOf(document.querySelector("#input" + id)), 1);
+        document.querySelector("#inputDiv" + id).remove();
+        this.computeData();
     };
     StatsApp.prototype.getInputs = function () {
         var _this = this;
