@@ -1,8 +1,9 @@
 class StatsApp {
-    data1Input: HTMLInputElement;
-    data2Input: HTMLInputElement;
-    data3Input: HTMLInputElement;
-    data4Input: HTMLInputElement;
+    inputCounter: HTMLInputElement;
+    counterSubmit: HTMLInputElement;
+    inputData: HTMLDivElement;
+
+    inputs = new Array<HTMLInputElement>();
 
     sumInput: HTMLInputElement;
     avgInput: HTMLInputElement;
@@ -15,14 +16,29 @@ class StatsApp {
 
     startApp(){
         this.getInputs();
-        this.watchInputValues();
+
+
+
+        this.setInputs();
     }
 
-    getInputs(){
-        this.data1Input = document.querySelector('#data1');
-        this.data2Input = document.querySelector('#data2');
-        this.data3Input = document.querySelector('#data3');
-        this.data4Input = document.querySelector('#data4');
+    setInputs() {
+        for(let i = 0; i < +this.inputCounter.value; i++){
+           let input = document.createElement('input');
+           input.type = 'number';
+           input.id = `input${i}`;
+           input.addEventListener('input', () => this.computeData());
+           this.inputs.push(input);
+           this.inputData.appendChild(input);
+        }
+    }
+
+    getInputs(){        
+        this.inputCounter = document.querySelector('#counter');
+        this.counterSubmit = document.querySelector('#counter-submit');
+        this.counterSubmit.addEventListener('click', () => this.setInputs());
+
+        this.inputData = document.querySelector('.input-data');
 
         this.sumInput = document.querySelector('#sum');
         this.avgInput = document.querySelector('#avg');
@@ -30,23 +46,19 @@ class StatsApp {
         this.maxInput = document.querySelector('#max');
     }
 
-    watchInputValues(){
-        this.data1Input.addEventListener('input', () => this.computeData())
-        this.data2Input.addEventListener('input', () => this.computeData())
-        this.data3Input.addEventListener('input', () => this.computeData())
-        this.data4Input.addEventListener('input', () => this.computeData())
-    }
-
     computeData() {
-        const data1 = +this.data1Input.value;
-        const data2 = +this.data2Input.value;
-        const data3 = +this.data3Input.value;
-        const data4 = +this.data4Input.value;
+        let data = new Array<number>();
+        let sum: number;
 
-        const sum = data1 + data2 + data3 + data4;
-        const avg = sum / 4;
-        const min = Math.min(data1, data2, data3, data4);
-        const max = Math.max(data1, data2, data3, data4);
+        this.inputs.forEach(i => {
+            data.push(+i.value);
+            sum += +i.value
+        });
+
+        const avg = sum / data.length;
+        const min = Math.min.apply(Math, data);
+        const max = Math.max.apply(Math, data);
+
         this.showStats(sum, avg, min, max);
     }
 
