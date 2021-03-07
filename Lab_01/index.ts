@@ -1,6 +1,5 @@
 class StatsApp {
     inputCounter: HTMLInputElement;
-    counterSubmit: HTMLInputElement;
     inputData: HTMLDivElement;
 
     inputs = new Array<HTMLInputElement>();
@@ -27,7 +26,7 @@ class StatsApp {
            let input = document.createElement('input');
            input.type = 'number';
            input.id = `input${i}`;
-           input.addEventListener('input', () => this.computeData());
+           input.addEventListener('blur', () => this.computeData());
            this.inputs.push(input);
            this.inputData.appendChild(input);
         }
@@ -35,8 +34,7 @@ class StatsApp {
 
     getInputs(){        
         this.inputCounter = document.querySelector('#counter');
-        this.counterSubmit = document.querySelector('#counter-submit');
-        this.counterSubmit.addEventListener('click', () => this.setInputs());
+        this.inputCounter.addEventListener('blur', () => this.setInputs());
 
         this.inputData = document.querySelector('.input-data');
 
@@ -48,9 +46,10 @@ class StatsApp {
 
     computeData() {
         let data = new Array<number>();
-        let sum: number;
+        let sum = 0;
 
         this.inputs.forEach(i => {
+            if(+i.value === NaN || +i.value === 0) return;
             data.push(+i.value);
             sum += +i.value
         });

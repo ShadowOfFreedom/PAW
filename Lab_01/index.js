@@ -13,7 +13,7 @@ var StatsApp = /** @class */ (function () {
             var input = document.createElement('input');
             input.type = 'number';
             input.id = "input" + i;
-            input.addEventListener('input', function () { return _this.computeData(); });
+            input.addEventListener('blur', function () { return _this.computeData(); });
             this.inputs.push(input);
             this.inputData.appendChild(input);
         }
@@ -21,8 +21,7 @@ var StatsApp = /** @class */ (function () {
     StatsApp.prototype.getInputs = function () {
         var _this = this;
         this.inputCounter = document.querySelector('#counter');
-        this.counterSubmit = document.querySelector('#counter-submit');
-        this.counterSubmit.addEventListener('click', function () { return _this.setInputs(); });
+        this.inputCounter.addEventListener('blur', function () { return _this.setInputs(); });
         this.inputData = document.querySelector('.input-data');
         this.sumInput = document.querySelector('#sum');
         this.avgInput = document.querySelector('#avg');
@@ -31,8 +30,10 @@ var StatsApp = /** @class */ (function () {
     };
     StatsApp.prototype.computeData = function () {
         var data = new Array();
-        var sum;
+        var sum = 0;
         this.inputs.forEach(function (i) {
+            if (+i.value === NaN || +i.value === 0)
+                return;
             data.push(+i.value);
             sum += +i.value;
         });
