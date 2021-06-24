@@ -1,0 +1,36 @@
+body {    
+    margin: 100px;
+
+    background: linear-gradient(rgb(245, 255, 254),rgb(54, 202, 235));
+    background-size: 500px 1920px;
+
+    text-align: center;
+    color: rgb(93, 166, 182);
+    font-family: 'Lato', sans-serif;
+    font-size: 2em;
+
+}
+
+input{
+    height: 2em;
+    width: 75%;
+
+    background: none;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 5px, solid;
+    border-color: rgb(93, 166, 182);
+    padding: 3px 10px;
+}
+
+button {
+    font-size: .5em;
+
+    background-color:rgb(18, 156, 187);
+    color: rgb(245, 255, 254);
+    padding: 10px;
+
+    border-radius: 4px;
+    border: 0;
+}
