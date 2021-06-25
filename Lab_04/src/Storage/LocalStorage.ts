@@ -3,11 +3,11 @@ import { Note } from "../Notes/Note";
 
 export class LocalStorage implements IAppStorage {
 
-    saveToStorage(notes: Note[]): void {
-        localStorage.notes = JSON.stringify(notes);
+    saveToStorage(note: Note): void {
+        localStorage.notes += JSON.stringify(note);
     }
 
-    readFromStorage(): Note[] {
+     async readFromStorage(): Promise<Note[]> {
         const data = localStorage.notes;
         let notes: Note[] = [];
         let tmp: [];

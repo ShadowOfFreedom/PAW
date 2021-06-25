@@ -26,6 +26,7 @@
     },
     "dependencies": {
         "@material/button": "^10.0.0",
+        "firebase": "^8.6.8",
         "material-design-icons": "^3.0.1"
     }
 }

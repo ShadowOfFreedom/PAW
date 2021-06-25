@@ -2,7 +2,7 @@ import { Note } from "./Note";
 import { IAppStorage } from "../Storage/IAppStorage";
 
 export class Notes {
-    notes: Note[];
+    notes: Note[] = [];
     storage: IAppStorage;
     notesContainer: HTMLElement;
 
@@ -11,13 +11,12 @@ export class Notes {
         this.storage = storage;
 
         this.getFromStorage();
-        this.writeToContainer();
     }
 
     addNote(note: Note): void {
         this.notes.push(note);
 
-        this.storage.saveToStorage(this.notes);
+        this.storage.saveToStorage(note);
         this.writeToContainer();
     }
 
@@ -25,12 +24,17 @@ export class Notes {
         const index = this.notes.indexOf(note);
         delete this.notes[index];
 
-        this.storage.saveToStorage(this.notes);
+        this.storage.saveToStorage(note);
         this.writeToContainer();
     }
 
     getFromStorage(): void {
-        this.notes = this.storage.readFromStorage();
+        this.storage.readFromStorage().then(n => {
+            n.forEach(element =>{
+                this.notes.push(element);
+            });
+            this.writeToContainer();
+        });
     }
 
     writeToContainer(): void {

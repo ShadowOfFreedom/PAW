@@ -1,4 +1,3 @@
-
 import { Config } from "./config";
 import { Note } from "./Notes/Note";
 import { Notes } from "./Notes/Notes";
@@ -21,7 +20,7 @@ export class App {
         this.pinButton = <HTMLInputElement>document.getElementById('pin_button');
         this.colorPicker = <HTMLInputElement>document.getElementById('note_color');
 
-        this.notes = new Notes(Config.STORAGE);
+        this.notes = new Notes(Config.FIREBASE_STORAGE);
 
         this.setEventListeners();
     }
