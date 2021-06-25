@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Lab_03</title>
+
+    <script src="https://kit.fontawesome.com/70d03580dc.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <div id="note_create">
+
+        <input type="text" class="input_text" id="note_title" name="title" placeholder="Tytuł">       
+        <input type="text" class="input_text" id="note_text" name="text" placeholder="Utwórz notatkę...">
+
+        <div>
+            <input id="pin_button" type="checkbox">
+                <label for="pin_button"></label>
+            </input>
+
+            <input type="color" id="note_color" value="#337D47">
+
+            <button id="create_button">Dodaj</button>
+            <button id="cancel_button">Anuluj</button>
+        </div>
+
+    </div>
+
+    <br>
+
+    <div id="notes_container">
+    </div>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
